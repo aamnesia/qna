@@ -1,1 +1,12 @@
+h3 Questions
+table
+  thead
+    tr
+      th Title
+    tr
+  tbody
+    - @questions.each do |question|
+      tr
+        td= question.title
+
 p= link_to 'Ask question', new_question_path
