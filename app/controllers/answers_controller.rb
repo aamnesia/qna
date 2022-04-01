@@ -10,13 +10,17 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
     else
-      redirect_to @question, notice: 'Not saved.'
+      render 'questions/show'
     end
   end
 
   def destroy
-    @answer.destroy if current_user.author?(@answer)
-    redirect_to @answer.question, notice: 'Your answer successfully deleted.'
+    if current_user.author?(@answer)
+      @answer.destroy
+      redirect_to @answer.question, notice: 'Your answer successfully deleted.'
+    else
+      redirect_to @answer.question, alert: 'You have to be author to delete it'
+    end
   end
 
   private
