@@ -18,22 +18,23 @@ feature 'User can create answer', %q{
 
     scenario 'answers a question' do
       fill_in 'Body', with: 'text text text'
-      click_on 'Answer'
+      click_on 'New answer'
 
       expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'text text text'
     end
 
     scenario 'gives answer with errors' do
-      click_on 'Answer'
+      click_on 'New answer'
+      save_and_open_page
 
-      expect(page).to have_content 'Not saved.'
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
   scenario 'Unauthenticated user tries to answer question' do
     visit question_path(question)
-    click_on 'Answer'
+    click_on 'New answer'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
